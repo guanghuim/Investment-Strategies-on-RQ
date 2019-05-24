@@ -120,24 +120,6 @@ def compute_relative_strength(context):
         pct_change = pct_change / abs(pct_changeforbase)
     context.relative_strength_6m = pct_change
 
-def rebalance(context, bar_dict):
-    to_sell=for_sell(context, bar_dict)
-    # Exit all positions before starting new ones
-    for stock in to_sell:
-            order_target_percent(stock, 0)
-
-    # 通过动量指标进一步过滤选股
-    # -0.6745 是一个参数，欢迎任意修改以fitting
-    #由于在某些回测区间缺少数据（例如股票当时尚未上市），导致prices.ix[19]的值为0，导致pct_change为inf，所以加入该指标小于9999的限制避免出现这种情况
-    context.stocks = for_buy(context, bar_dict)
-   
-    if len(context.stocks) == 0:
-        return
-    
-    weight = 1.0/len(context.stocks)
-    
-    for stock in context.stocks:
-        order_target_percent(stock, weight)
 
 
 '''--------------操作部分----------------'''
