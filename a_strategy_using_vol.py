@@ -16,9 +16,6 @@ def init_variables (context):
     context.relative_strength_6m = {}
     return
 
-'''选择调仓时间'''
-def month_passed(context): 
-    return context.days % context.month_days == 0
 
 '''选择股票池'''
 
@@ -120,8 +117,9 @@ def compute_relative_strength(context):
         pct_change = pct_change / abs(pct_changeforbase)
     context.relative_strength_6m = pct_change
 
-
-
+# 选择调仓时间
+def month_passed(context): 
+    return context.days % context.month_days == 0
 '''--------------操作部分----------------'''
 
 def init(context):
